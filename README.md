@@ -1,66 +1,92 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# MoneyFlex Task
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is the MoneyFlex Task project, a simple application with an API powered by Laravel. It's set up with Docker and comes with Swagger docs for easy API exploration.
 
-## About Laravel
+## Quick Start
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Follow these steps to get the project up and running with Docker.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Prerequisites
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- [Docker](https://www.docker.com/get-started) (Including Docker Compose)
+- [PHP](https://www.php.net/) >= 8.x (But don't worry, Docker takes care of this)
+- [Laravel](https://laravel.com/) 10.x (It's the backbone of this app)
 
-## Learning Laravel
+### Setting Up Docker
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. **Clone the repo:**
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+   ```bash
+   git clone https://github.com/yourusername/moneyflex-task.git
+   cd moneyflex-task
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+2. **Copy `.env.example` to `.env`:**
 
-## Laravel Sponsors
+   ```bash
+   cp .env.example .env
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+   If you need to change any environment settings (like database credentials), do it here.
 
-### Premium Partners
+3. **Build and run Docker containers:**
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+   This will start everything you need:
 
-## Contributing
+   ```bash
+   docker-compose up --build
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+4. **Run migrations:**
 
-## Code of Conduct
+   Make sure the database is set up by running:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+   ```bash
+   docker-compose exec app php artisan migrate
+   ```
 
-## Security Vulnerabilities
+5. **Access the app:**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+   Now, the app should be running on `http://localhost` (or whichever port you've set in your `docker-compose.yml`).
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Swagger API Docs
+
+MoneyFlex Task comes with Swagger API docs for easy API testing and exploration. Here's how to check them out:
+
+1. **Visit the Swagger docs UI:**
+
+   After the app is running, go to:
+
+   ```
+   http://localhost:8080/docs
+   ```
+
+   You’ll see a nice UI where you can browse all API endpoints, see how they work, and even test them directly!
+
+2. **Regenerate Docs (if needed):**
+
+   If you make any changes to the API, you can regenerate the docs with this command:
+
+   ```bash
+   docker-compose exec app php artisan swagger-lume:generate
+   ```
+
+   This will refresh the Swagger docs (`api-docs.json`) to reflect any changes.
+
+---
+
+## API Testing
+
+To test the API, you can use Swagger UI (mentioned above), or tools like [Postman](https://www.postman.com/) or [Insomnia](https://insomnia.rest/). For example:
+
+- To get the list of customers, hit:
+
+  ```
+  GET http://localhost/api/customers
+  ```
+
+  Make sure to include your `Authorization` header with a Bearer token if needed.
+
+---
